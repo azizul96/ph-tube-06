@@ -4,8 +4,8 @@ const loadCategory = async () => {
     const data = await response.json()
     const categories = data.data
     
-    
     const tabContainer = document.getElementById('tab-container');
+    tabContainer.textContent=""
     categories.forEach(singleCategory => {
         const div = document.createElement('div');
         div.innerHTML = `
@@ -15,21 +15,23 @@ const loadCategory = async () => {
         `;
         tabContainer.appendChild(div);
     });
-
 }
+let cards
 const handleLoadCard = async (categoryID) =>{
     const response = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryID}`)
     const data = await response.json()
-    const cards = data.data
+    // console.log(data);
+    cards = data.data
+    // sortByViews()
     const cardContainer = document.getElementById("card-container")
     cardContainer.textContent =''
     const noDataContainer = document.getElementById("no-data-card")
     noDataContainer.textContent =''
-    if(cards.length === 0){
+    if(categoryID === "1005"){
         
         const div = document.createElement('div')
         div.innerHTML = `
-        <div class="card  ">
+        <div class="card ">
             <figure class="px-10 pt-10">
                 <img src="./image/Icon.png" alt="" class="rounded-xl" />
             </figure>
@@ -44,13 +46,13 @@ const handleLoadCard = async (categoryID) =>{
     cards.forEach(card =>{
         const div = document.createElement('div');
         const second = `${card.others.posted_date}`
-        let h= parseFloat(second)/3600;
-        let m=parseFloat(second)%60;
+        let hours = parseFloat(second)/3600;
+        let minute = parseFloat(second)%60;
         let hm;
         let time;
-        if(second>0&&m>0)
+        if(second>0&&minute>0)
         {
-             hm =parseInt(h)+" "+"hrs"+" "+parseInt(m)+" "+"min"+" "+"ago";
+             hm =parseInt(hours)+" "+"hrs"+" "+parseInt(minute)+" "+"min"+" "+"ago";
              time =` <p class="absolute bg-[#171717] text-white bottom-2 right-2 px-2 rounded-md">${hm}</p>`
         }
         else{
@@ -84,12 +86,19 @@ const handleLoadCard = async (categoryID) =>{
         cardContainer.appendChild(div)
     })
     }
-    sortByViews(cards)
-}
-
-const sortByViews = (cards)=>{
-    
 }
 
 loadCategory()
 handleLoadCard(categoryID = 1000)
+
+
+
+
+const sortByViews = ()=>{
+    cards.sort((a,b) => parseFloat(b.others.views)- parseFloat(a.others.views)) 
+    
+}
+
+const blogHandler =()=>{
+    window.location.href ='blog.html'
+}
