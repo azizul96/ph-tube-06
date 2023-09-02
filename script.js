@@ -27,7 +27,7 @@ const loadCategory = async () => {
         const div = document.createElement('div');
         div.innerHTML = `
         <div>
-            <button onclick="getCard('${singleCategory.category_id}');activeCategory('${singleCategory.category_id}')" class="btn  px-5 py-3 bg-[#FF1F3D] text-white  ">${singleCategory.category}</button>
+            <button onclick="getCard('${singleCategory.category_id}');activeCategory('${singleCategory.category_id}')" class="btn  px-5 py-3 btn-accent bg-[#FF1F3D] text-white border-none ">${singleCategory.category}</button>
         </div>
         `;
         tabContainer.appendChild(div);
