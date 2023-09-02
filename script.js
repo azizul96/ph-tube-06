@@ -1,9 +1,9 @@
-
+//  Declare global variable and sorting data based on views
 let currentActiveID = 1000
 document.getElementById('sort-by-view').addEventListener('click', function(){
     console.log(currentActiveID);
     fetch(`https://openapi.programming-hero.com/api/videos/category/${currentActiveID}`)
-    .then(res=>res.json())
+    .then(res => res.json())
     .then(resData => {
         const cards = resData.data
         cards.sort((a,b) => parseFloat(b.others.views) - parseFloat(a.others.views)) 
@@ -12,10 +12,9 @@ document.getElementById('sort-by-view').addEventListener('click', function(){
 })
 const activeCategory =(catID) =>{
     currentActiveID = parseInt(catID)
-
 }
 
-
+// fetch Category and show tab
 const loadCategory = async () => {
     const response = await fetch("https://openapi.programming-hero.com/api/videos/categories")
     const data = await response.json()
@@ -34,13 +33,14 @@ const loadCategory = async () => {
         
     });
 }
+// fetch video card data
 const getCard = async(categoryID)=> {
     const response = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryID}`)
     const data = await response.json()
     const cards = data.data
     handleLoadCard(cards)
 }
-
+// Video card create and showing function
 const handleLoadCard = async (cards) =>{
     
     const cardContainer = document.getElementById("card-container")
@@ -84,7 +84,7 @@ const handleLoadCard = async (cards) =>{
 
         <div class="card   ">
         <figure class="rounded-md relative">
-            <img src="${card.thumbnail}" alt="Shoes" class=" w-full h-56"/>
+            <img src="${card.thumbnail}" alt="Shoes" class=" w-full h-48"/>
             ${time}
         </figure>
         <div class="card-body  rounded-md px-0">
@@ -94,7 +94,7 @@ const handleLoadCard = async (cards) =>{
                 </div>
                 <div >
                     <h2 class="font-bold text-base text-[#171717] mb-1">${card.title}</h2>
-                    <div class="flex  flex-row justify-start gap-2 mb-3">
+                    <div class="flex  flex-row justify-start gap-1 mb-3">
                     <p class="font-normal text-sm flex-grow-0">${card.authors[0].profile_name}</p>
                     <p>${card.authors[0].verified? ` <img src="blue.svg"/>`: ''}</p>
                     </div>
@@ -108,16 +108,11 @@ const handleLoadCard = async (cards) =>{
     })
     }
 }
-
+// Category and video card function call for home page 
 loadCategory()
 getCard(1000)
 
-
-
-
-
-// cards.sort((a,b) => parseFloat(b.others.views)- parseFloat(a.others.views)) 
-
+// Blog page Handler
 const blogHandler =()=>{
     window.location.href ='blog.html'
 }
